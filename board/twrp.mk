@@ -12,3 +12,9 @@ TW_NO_EXFAT := true
 TW_NO_EXFAT_FUSE := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_EXTRA_LANGUAGES := true
+
+# exFAT FS Support
+TW_INCLUDE_FUSE_EXFAT := true
+
+# NTFS Support
+TW_INCLUDE_FUSE_NTFS := true
