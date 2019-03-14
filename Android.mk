@@ -16,7 +16,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE), karate)
+ifeq ($(TARGET_DEVICE), hannah)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 

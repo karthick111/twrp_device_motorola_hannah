@@ -15,5 +15,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/omni_karate.mk \
-	$(LOCAL_DIR)/full_karate.mk
+	$(LOCAL_DIR)/omni_hannah.mk \
+	$(LOCAL_DIR)/full_hannah.mk
