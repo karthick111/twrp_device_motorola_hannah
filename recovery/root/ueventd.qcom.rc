@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2015, 2017, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -27,8 +27,12 @@
 
 # the DIAG device node is not world writable/readable.
 /dev/diag                 0660   system     oem_2901
+/dev/ttydiag0             0660   system     oem_2901
+/dev/ttydiag1             0660   system     oem_2901
+/dev/ttydiag2             0660   system     oem_2901
 
 /dev/genlock              0666   system     system
+/dev/wlan                 0660   wifi       wifi
 /dev/kgsl                 0666   system     system
 /dev/kgsl-3d0             0666   system     system
 /dev/kgsl-2d0             0666   root       root
@@ -42,14 +46,22 @@
 /dev/smd6                 0660   system     system
 /dev/smd7                 0660   bluetooth  bluetooth
 /dev/ccid_bridge          0660   system     system
-/dev/ipa                  0660   system     net_admin
-/dev/wwan_ioctl           0660   system     net_admin
-/dev/ipaNatTable          0660   net_admin  net_admin
+/dev/ipa                  0660   radio      radio
+/dev/wwan_ioctl           0660   radio      radio
+/dev/ipaNatTable          0660   radio      radio
 /dev/rmnet_ctrl           0660   usb        usb
 /dev/dpl_ctrl             0660   usb        usb
 
 #permissions for CSVT
 /dev/smd11                0660   radio      radio
+
+#permsissions for BT/FM
+/dev/smd2                 0660   bluetooth  bluetooth
+/dev/smd3                 0660   bluetooth  bluetooth
+/dev/btpower              0660   bluetooth  system
+
+#permissions for pta
+/dev/pta                  0660   system     system
 
 /dev/radio0               0640   system     system
 /dev/rfcomm0              0660   bluetooth  bluetooth
@@ -106,9 +118,11 @@
 /dev/at_usb0              0640   radio      radio
 /dev/at_mdm0              0640   radio      radio
 /dev/video*               0660   system     camera
+/dev/v4l2-hal-ctrl        0660   system     camera
 /dev/media*               0660   system     camera
 /dev/v4l-subdev*          0660   system     camera
 /dev/qseecom              0660   system     drmrpc
+/dev/smcinvoke            0660   system     system
 /dev/qsee_ipc_irq_spss    0660   system     drmrpc
 /dev/seemplog             0660   system     system
 /dev/pft                  0660   system     drmrpc
@@ -125,12 +139,12 @@
 /dev/adsprpc-smd          0664   system     system
 /dev/system_health_monitor 0644  radio      system
 /dev/mdss_rotator         0664   system     system
-/dev/earlycamera          0666   system     system
 # wlan
 /dev/wcnss_wlan           0660   system     system
 /dev/wcnss_ctrl           0660   system     system
 /sys/devices/soc/a000000.qcom,wcnss-wlan/net/wlan0/queues/rx-* rps_cpus           0660   system     system
 /sys/devices/soc/a000000.qcom,wcnss-wlan/net/p2p0/queues/rx-* rps_cpus            0660   system     system
+/dev/spidev0.0            0660   system     audio
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera
@@ -143,6 +157,7 @@
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
+/dev/wcd_dsp0_control     0660   system     audio
 /dev/wcd-dsp-glink        0660   system     audio
 /dev/audio_slimslave      0660   system     audio
 /dev/msm_qcelp            0660   system     audio
@@ -159,7 +174,8 @@
 /dev/msm_aac_in           0660   system     audio
 /dev/msm_qcelp_in         0660   system     audio
 /dev/msm_evrc_in          0660   system     audio
-/dev/msm_amrnb_in         0640   system     audio
+/dev/msm_amrnb_in         0660   system     audio
+/dev/msm_amrwb_in         0660   system     audio
 /dev/msm_a2dp_in          0660   system     audio
 /dev/msm_ac3              0660   system     audio
 /dev/msm_audio_cal        0660   system     audio
@@ -171,8 +187,6 @@
 /dev/msm_preproc_ctl      0660   system     audio
 /dev/msm_rtac             0660   system     audio
 /dev/msm_voicememo        0660   system     audio
-/dev/smd3                 0660   bluetooth  bluetooth
-/dev/smd2                 0660   bluetooth  bluetooth
 /dev/ttyHSL1              0660   system     system
 /dev/ttyHS1               0660   system     system
 /dev/mdm                  0660   system     radio
@@ -181,7 +195,6 @@
 /dev/tty_sdio_00          0660   system     system
 /dev/ttyGS0               0660   system     system
 /dev/i2c-5                0660   media       media
-/dev/voice_svc            0660   system     audio
 /dev/avtimer              0660   system     audio
 
 # DVB devices
@@ -197,18 +210,18 @@
 /sys/devices/i2c-12/12-*  pollrate_ms 0664 system system
 /sys/devices/f9925000.i2c/i2c-0/0-*                 enable         0660    input    system
 /sys/devices/f9925000.i2c/i2c-0/0-*                 poll_delay     0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            enable         0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            poll_delay     0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            enable_wakeup  0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            max_latency    0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            flush          0660    input    system
-/sys/devices/soc.0/78b6000.i2c/i2c-0/0-*            calibrate      0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            enable         0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            poll_delay     0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            enable_wakeup  0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            max_latency    0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            flush          0660    input    system
-/sys/devices/soc.0/78b5000.i2c/i2c-1/1-*            calibrate      0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            enable         0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            poll_delay     0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            enable_wakeup  0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            max_latency    0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            flush          0660    input    system
+/sys/devices/soc/78b6000.i2c/i2c-0/0-*            calibrate      0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            enable         0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            poll_delay     0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            enable_wakeup  0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            max_latency    0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            flush          0660    input    system
+/sys/devices/soc/78b5000.i2c/i2c-1/1-*            calibrate      0660    input    system
 /sys/devices/virtual/optical_sensors/proximity      ps_adc         0660    input    system
 /sys/devices/virtual/optical_sensors/proximity      ps_poll_delay  0660    input    system
 /sys/devices/virtual/optical_sensors/lightsensor    ls_auto        0660    input    system
@@ -225,8 +238,9 @@
 /sys/devices/soc/c179000.i2c/i2c-5/5-0020/input/input*    secure_touch_enable  0660   system  drmrpc
 
 # laser sensor access
-/sys/devices/virtual/input/input*                   enable_ps_sensor 0660  system   system
-/sys/devices/virtual/input/input*                   set_delay_ms     0660  system   system
+/sys/devices/virtual/input/input*                   enable_ps_sensor 0660  system   input
+/sys/devices/virtual/input/input*                   set_delay_ms     0660  system   input
+/sys/devices/virtual/input/input*                   do_flush         0660  system   input
 
 # vm_bms
 /dev/vm_bms               0660   system     system
@@ -238,10 +252,19 @@
 /sys/devices/soc/600000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/net/wlan0/queues/rx-* rps_cpus 0660 system system
 /sys/devices/soc/600000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/net/p2p0/queues/rx-* rps_cpus 0660 system system
 
+# wigig
+/sys/bus/pci/drivers/wil6210* 0000:01:00.0/wil6210/fst_link_loss 0660 wifi wifi
+/sys/bus/pci/drivers/wil6210* 0000:01:00.0/wil6210/thermal_throttling 0660 system system
+/sys/bus/pci/drivers/wil6210* 0000:01:00.0/net/wigig0/queues/rx-0/rps_cpus 0660 system system
+/sys/bus/pci/drivers/wil6210* 0000:01:00.0/net/wigig0/gro_flush_timeout 0660 system system
+/sys/devices/virtual/net/bond0 queues/rx-0/rps_cpus 0660 system system
+
 #nfc permissions
 /dev/nfc-nci              0660    nfc         nfc
 /dev/nq-nci               0660    nfc         nfc
 /dev/assd                 0660    nfc         nfc
+/dev/pn544                0660    nfc         nfc
+/dev/bcm2079x-i2c         0660    nfc         nfc
 
 # UIO devices
 /dev/uio0                 0660   system     system
@@ -250,6 +273,9 @@
 
 # SSR devices
 /dev/subsys_*         0640   system     system
+
+# Add device block for FRP
+/dev/block/bootdevice/by-name/frp 0600 system system
 
 # Ultrasound device
 /dev/usf1                 0660   system     system
@@ -265,13 +291,94 @@
 /dev/hbtp_vm              0660   system     system
 
 # Add device block for FRP
-/dev/block/platform/soc/7824900.sdhci/by-name/config    0600   system     system
 /dev/block/platform/soc/7464900.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/624000.ufshc/by-name/frp        0600   system     system
 /dev/block/platform/soc/1da4000.ufshc/by-name/frp       0600   system     system
+/dev/block/platform/soc/c0c4000.sdhci/by-name/frp       0600   system     system
+/dev/block/platform/soc/1d84000.ufshc/by-name/frp       0600   system     system
+/dev/block/bootdevice/by-name/frp 0600 system system
 
-# fpc Fingerprint
-/sys/devices/soc/soc:fpc1020		hw_reset			0220   system     system
-/sys/devices/soc/soc:fpc1020		irq	                        0660   system     system
-/sys/devices/soc/soc:fpc1020            wakeup_enable	                0220   system     system
-/sys/devices/soc/soc:fpc1020            compatible_all	                0220   system     system
+# Kmsg device
+/dev/kmsg                                               0620   root       system
+
+# I2C
+/dev/i2c-*                0660   system     system
+
+#JOT fixture devices for AMPS factory testing
+/dev/hidraw0              0660   root       mot_tcmd
+/dev/hidraw1              0660   root       mot_tcmd
+
+# MOD device
+/sys/devices/soc/75b5000.i2c/i2c-7/7-0072 irq_enable 0660 mot_tcmd mot_tcmd
+/sys/devices/soc/0.apba_ctrl apba_enable 0660 mot_tcmd mot_mod
+/sys/devices/soc/0.apba_ctrl apba_mode 0660 mot_tcmd mot_mod
+/sys/devices/soc/0.apba_ctrl flash_partition 0220 mot_tcmd mot_mod
+/sys/devices/soc/0.apba_ctrl unipro_mid 0440 root mot_mod
+/sys/devices/soc/0.apba_ctrl unipro_pid 0440 root mot_mod
+/sys/devices/soc/0.apba_ctrl vid 0440 root mot_mod
+/sys/devices/soc/0.apba_ctrl pid 0440 root mot_mod
+/sys/devices/soc/0.apba_ctrl fw_version 0440 root mot_mod
+/sys/devices/soc/0.apba_ctrl fw_version_str 0440 root mot_mod
+/sys/devices/soc/soc:muc_svc@0/mods_interfaces/* hotplug 0660 root mot_mod
+/sys/devices/soc/soc:muc_svc@0/mods_interfaces/* uevent 0660 root mot_mod
+/sys/devices/soc/soc:muc_svc@0/mods_interfaces/* current_limit 0220 root mot_mod
+/sys/devices/soc/soc:muc_svc@0/mods_interfaces/* rtc_sync 0220 root mot_mod
+/sys/devices/soc/soc:muc_svc@0 flashmode 0660 root mot_mod
+/sys/devices/soc/soc:muc_svc@0 reset 0660 root mot_mod
+/sys/devices/soc/0.muc/0.muc:muc_svc@0/mods_interfaces/* hotplug 0660 root mot_mod
+/sys/devices/soc/0.muc/0.muc:muc_svc@0/mods_interfaces/* uevent 0660 root mot_mod
+/sys/devices/soc/0.muc/0.muc:muc_svc@0 flashmode 0660 root mot_mod
+/sys/devices/platform/mods_ap uevent 0660 root mot_mod
+/sys/devices/platform/mods_ap/* uevent 0660 root mot_mod
+/sys/devices/platform/mods_ap/greybus1 uevent 0664 root mot_mod
+
+# MOD display device
+/sys/devices/platform/mods_ap/greybus1/*/*/display/display* state 0660 root mot_mod
+/sys/devices/platform/mods_ap/greybus1/*/*/display/display* config 0444 root mot_mod
+/sys/devices/platform/mods_ap/greybus1/*/*/display/display* notification 0660 root mot_mod
+
+# MOD light device
+/sys/devices/platform/mods_ap/greybus1/*/*/leds/mod_light*::backlight brightness 0660 root mot_mod
+
+# IIO (dynamic sensors)
+/sys/devices/iio_sysfs_trigger/add_trigger          0220    system      system
+/sys/devices/iio_sysfs_trigger/remove_trigger       0220    system      system
+
+/sys/devices/iio:device* buffer/*                   0664    system      system
+/sys/devices/iio:device* scan_elements/in_*_en      0664    system      system
+/sys/devices/iio:device* trigger/current_trigger    0664    system      system
+/sys/devices/iio:device* in_sampling_frequency      0664    system      system
+/sys/devices/iio:device* max_latency_ns             0664    system      system
+/sys/devices/iio:device* flush                      0220    system      system
+
+/dev/iio:device*                                    0600    system      system
+
+# RAW device
+/dev/gbraw*             0660   root   mot_mod
+# Audio device
+/sys/devices/platform/mods_codec.0 uevent 0660 root mot_mod
+/sys/devices/platform/mods_codec.0/* uevent 0660 root mot_mod
+
+# MOD camera device
+/dev/mot_camera_ext*               0660   system     camera
+/sys/devices/virtual/video4linux/mot_camera_ext* open_mode 0660 system camera
+/sys/devices/virtual/video4linux/mot_camera_ext* uevent 0660 root mot_mod
+/sys/devices/virtual/video4linux/video* open_mode 0660 system camera
+/sys/devices/virtual/video4linux/video* uevent 0660 root mot_mod
+
+# Laser device
+/dev/laser                0660   system     camera
+
+# haptic
+/dev/drv2605              0660   system     system
+
+#DTV
+/dev/isdbt                 0660 mot_dtv  mot_dtv
+
+#Egistec fingerprint
+/dev/esfp0		  0660   system     system
+
+# Trustonic TEE device
+/dev/mobicore             0600   system     system
+/dev/mobicore-user        0666   system     system
+
