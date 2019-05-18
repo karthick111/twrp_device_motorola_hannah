@@ -94,7 +94,8 @@ service keymaster-3-0 /sbin/android.hardware.keymaster@3.0-service-qti
     seclabel u:r:recovery:s0
 
 on boot
-    setprop sys.usb.config adb
+    setprop sys.usb.config mtp,adb
+    setprop sys.usb.configfs 1
 
 on property:crypto.ready=0
     stop sbinqseecomd
