@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-# Specify phone tech before including full_phone
-$(call inherit-product, vendor/omni/config/gsm.mk)
-
 $(call inherit-product, device/motorola/hannah/full_hannah.mk)
 
 # Inherit some common Omni stuff.
